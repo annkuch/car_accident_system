@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset='utf-8'/>
+    <title>Список ДТП</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<style>
+    html, body {
+        height: 100%;
+        color: #8080ab;
+        font-family: Arial, Tahoma, sans-serif;
+    }
+
+    #blockOfHeader {
+        display: inline;
+    }
+
+    #header {
+        margin-top: 1em;
+        margin-bottom: 0.8em;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    body {
+        background: rgba(44, 3, 171, 0.12);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group {
+        width: 50%;
+    }
+
+    .container {
+        max-width: 90%;
+    }
+
+    section {
+        font-size: large;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    span {
+        color: red;
+        font-size: small;
+        text-align: center;
+        display: block;
+        margin-top: 0.4em;
+        font-style: italic;
+    }
+
+    p {
+        color: red;
+        font-size: larger;
+    }
+
+    #buttons {
+        margin-top: 0.8em;
+        margin-bottom: 1.1em;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #updateButton {
+        margin-right: 2em;
+    }
+
+    input.btn {
+        background-color: #fff;
+        color: #8080ab;
+        border-color: #8080ab;
+    }
+
+    input.btn:hover {
+        background-color: #8080ab;
+    }
+</style>
+<body>
+<div class="container">
+    <div class="row pt-2" id="blockOfHeader">
+        <h1 id="header">Редагування заяви</h1>
+    </div>
+    <!--/*@thymesVar id="accident" type="com.kpi.accidents.model.Accident"*/-->
+    <form action="#" th:action="@{/update}" th:object="${accident}" method="POST">
+        <section>
+            <input type="hidden" name="id" th:field="*{id}"/>
+            <div class="form-group">
+                <label for="name">Введіть Ваше ПІБ: </label>
+                <input type="text" th:field="*{name}" class="form-control" id="name" name="name" th:value="${accident.name}"/>
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Помилка в імені</span>
+            </div>
+            <div class="form-group">
+                <label for="types">Оберіть тип правопорушення: </label>
+                <select th:field="*{accidentType.id}" class="form-control" id="types">
+                    <option th:value="0"> --- оберіть тип --- </option>
+                    <option th:each="variant : ${types}" th:value="${variant.id}" th:text="${variant.name}"></option>
+                </select>
+                <span th:if="${#fields.hasErrors('accidentType.id')}" th:errors="*{accidentType.id}">Type error</span>
+            </div>
+            <div class="form-group">
+                <label for="rules">Оберіть статті правопорушення: </label>
+                <select th:field="*{accidentRule.id}" class="form-control" id="rules" >
+                    <option th:value="0"> --- оберіть статтю --- </option>
+                    <option th:each="variant : ${rules}" th:value="${variant.id}" th:text="${variant.name}"></option>
+                </select>
+                <span th:if="${#fields.hasErrors('accidentRule.id')}" th:errors="*{accidentRule.id}">Rule selection error</span>
+            </div>
+            <div class="form-group">
+                <label for="address">Введіть адресу події: </label>
+                <input type="text" th:field="*{address}" class="form-control" id="address" name="address" th:value="${accident.name}"/>
+                <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Помилка в адресі</span>
+            </div>
+            <div class="form-group">
+                <label for="dateAccident">Дата події: </label>
+                <input type="date" th:field="*{dateAccident}" class="form-control" id="dateAccident" th:value="${accident.dateAccident}" required/>
+                <span th:if="${#fields.hasErrors('dateAccident')}" th:errors="*{dateAccident}">Помилка дати</span>
+            </div>
+            <div class="form-group">
+                <label for="timeAccident">Час події: </label>
+                <input type="time" th:field="*{timeAccident}" class="form-control" id="timeAccident" th:value="${accident.timeAccident}" required/>
+                <span th:if="${#fields.hasErrors('timeAccident')}" th:errors="*{timeAccident}">Помилка часу</span>
+            </div>
+            <div class="form-group">
+                <label for="text">Напишіть опис події: </label>
+                <textarea th:field="*{text}" class="form-control" id="text" rows="3" name="text">${accident.text}</textarea>
+                <span th:if="${#fields.hasErrors('text')}" th:errors="*{text}">Помилка в описі</span>
+            </div>
+            <div id="buttons">
+                <input id="updateButton" type="submit" name="save" class="btn btn-outline-dark" value="Оновити заяву"/>
+            </div>
+    </form>
+
+    <!-- Окрема форма для видалення події -->
+        <form th:action="@{/delete}" method="POST" style="margin-top: 1em;">
+            <input type="hidden" name="id" th:value="${accident.id}" />
+            <button type="submit" class="btn btn-outline-danger">Видалити подію</button>
+        </form>
+        </section>
+    </form>
+</div>
+</body>
+</html>

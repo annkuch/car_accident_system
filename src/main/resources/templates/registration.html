@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset='utf-8'/>
+    <title>Список ДТП</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<style>
+    html, body {
+        height: 100%;
+        text-align: center;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        background-color: #8080ab;
+    }
+
+    section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex-grow: 15;
+    }
+
+    header {
+        margin-top: 2em;
+    }
+
+    footer {
+        flex-grow: 1;
+    }
+
+    header h1, footer p {
+        color: #fff;
+        text-align: center;
+    }
+
+    header h1 {
+        padding-top: .125rem;
+        padding-bottom: 1em;
+        border-bottom: .125rem solid #fff;
+    }
+
+    h1:first-letter {
+        font-family: cursive;
+        font-size: 120%;
+    }
+
+    footer p {
+        padding-top: 2em;
+        padding-bottom: .125rem;
+        border-top: .125rem solid #fff;
+        text-transform: uppercase;
+    }
+
+    h3 {
+        color: #0081b5;
+        text-transform: uppercase;
+    }
+
+    caption {
+        color: black;
+        font-size: larger;
+        font-weight: 300;
+        text-align: center;
+        caption-side: top;
+        background-color: #fff;
+    }
+
+    span {
+        color: red;
+        font-size: 0.7em;
+        text-align: right;
+        display: block;
+        font-style: italic;
+    }
+
+    #userError {
+        padding-right: 4.8em;
+    }
+
+    #passwordError {
+        padding-right: 4.2em;
+    }
+
+    form {
+        border-radius: 10px 10px 10px 10px;
+        border: 1em solid #fff;
+        background-color: white;
+    }
+
+    table {
+        background-color: #fff;
+        border: 0.5em solid #fff;
+    }
+
+    table td {
+        padding: 0;
+        margin: 0;
+        border-bottom: 3px solid #fff;
+    }
+
+    tbody {
+        margin-top: 1em;
+    }
+
+    #lastTd {
+        padding-top: 1em;
+    }
+
+    #sendButton {
+        background-color: #fff;
+        color: #23a843;
+        border-color: #23a843;
+    }
+
+    #sendButton:hover {
+        color: #fff;
+        background-color: #23a843;
+    }
+
+    .text {
+        text-align: right;
+        color: black;
+        padding: 8px 6px;
+        background-color: #fff;
+        font-weight: 300;
+    }
+
+    #buttons {
+        padding-top: 1em;
+        margin-bottom: 2em;
+    }
+
+    a {
+        text-decoration: none;
+        color: #0081b5;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+<body>
+<header>
+    <h1>Фіксація правопорушень</h1>
+</header>
+<section>
+    <form action="#" th:action="@{/registration}" name='registration' method='POST' th:object="${user}">
+        <table>
+            <caption>
+                Реєстрація
+            </caption>
+            <tr>
+                <td class="text">
+                    <label for="username">Введіть логін: </label>
+                </td>
+                <td>
+                    <input th:field="*{username}" type='text' name='username' id="username" class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <td colspan='2'>
+                    <span id="userError" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Помилка логіну</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="text">
+                    <label for="password">Введіть пароль: </label>
+                </td>
+                <td>
+                    <input th:field="*{password}" type='password' name='password' id="password" class="form-control"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan='2'>
+                    <span id="passwordError" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Помилка паролю</span>
+                </td>
+            </tr>
+            <tr id="buttons">
+                <td id="lastTd" colspan='2'><input id="sendButton" class="btn btn-outline-dark" name="submit" type="submit" value="Зберегти"/></td>
+            </tr>
+        </table>
+    </form>
+</section>
+<footer>
+    <p>
+        &copy; Всі права захищено
+    </p>
+</footer>
+</body>
+</html>

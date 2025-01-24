@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset='utf-8'/>
+    <title>Список ДТП</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<style>
+    html, body {
+        height: 100%;
+        text-align: center;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        background-color: #8080ab;
+    }
+
+    section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex-grow: 15;
+    }
+
+    header {
+        margin-top: 2em;
+    }
+
+    footer {
+        flex-grow: 1;
+    }
+
+    header h1, footer p {
+        color: #fff;
+        text-align: center;
+    }
+
+    header h1 {
+        padding-top: .125rem;
+        padding-bottom: 1em;
+        border-bottom: .125rem solid #fff;
+    }
+
+    h1:first-letter {
+        font-family: cursive;
+        font-size: 120%;
+    }
+
+    footer p {
+        padding-top: 2em;
+        padding-bottom: .125rem;
+        border-top: .125rem solid #fff;
+        text-transform: uppercase;
+    }
+
+    h3 {
+        color: #0081b5;
+        text-transform: uppercase;
+    }
+
+    caption {
+        color: black;
+        font-size: larger;
+        font-weight: 300;
+        text-align: center;
+        caption-side: top;
+        background-color: #fff;
+    }
+
+    span {
+        color: #d33;
+    }
+
+    form {
+        border-radius: 10px 10px 10px 10px;
+        border: 1em solid #fff;
+        background-color: white;
+    }
+
+    table {
+        background-color: #fff;
+        border: 0.5em solid #fff;
+    }
+
+    table td {
+        padding: 0;
+        margin: 0;
+        border-bottom: 3px solid #fff;
+    }
+
+    tbody {
+        margin-top: 1em;
+    }
+
+    #sendButton {
+        background-color: #fff;
+        color: #23a843;
+        border-color: #23a843;
+        margin-left: 0.2em;
+        margin-right: 0.2em;
+        padding: 0.1em 0.52em 0.32em 0.52em;
+        font-size: 2.8em
+    }
+
+    #sendButton:hover {
+        color: #fff;
+        background-color: #23a843;
+    }
+
+    .text {
+        text-align: right;
+        color: black;
+        padding: 8px 6px;
+        background-color: #fff;
+        font-weight: 300;
+    }
+
+    #lastTr {
+        padding-top: 0.5em;
+    }
+
+    #buttons {
+        margin-bottom: 2em;
+    }
+
+    a {
+        text-decoration: none;
+        color: #0081b5;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+<body>
+<header>
+    <h1>Фіксація правопорушень</h1>
+</header>
+<section>
+    <form action="#" th:action="@{/login}" name='login' method='POST'>
+        <span th:if="${errorMessage != ''}" th:text="${errorMessage}">Помилка авторизації</span>
+        <table cellspacing="0">
+            <caption>
+                Аутентифікація
+            </caption>
+            <tbody>
+            <tr>
+                <td class="text">
+                    <label for="login">Логін: </label>
+                </td>
+                <td>
+                    <input type="text" name="username" class="form-control" id="login"/>
+                </td>
+                <td rowspan="2" id="buttons">
+                    <input id="sendButton" type="submit" name="save" class="btn btn-outline-dark" value="&rarr;"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="text">
+                    <label for="password">Пароль: </label>
+                </td>
+                <td>
+                    <input type="password" name="password" class="form-control" id="password"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" id="lastTr">
+                    <a href="#" th:href="@{/registration}" title='Реєстрація'>Реєстрація</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    </form>
+</section>
+<footer>
+    <p>
+        &copy; Всі права захищено
+    </p>
+</footer>
+</body>
+</html>

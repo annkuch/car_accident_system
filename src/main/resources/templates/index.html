@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset='utf-8'/>
+    <title>Список ДТП</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<style>
+    html, body {
+        height: 100%;
+        color: #fff;
+        font-family: Arial, Tahoma, sans-serif;
+    }
+
+    #blockOfHeader {
+        display: inline;
+    }
+
+    #header {
+        margin-top: 1.4em;
+        text-transform: uppercase;
+        text-align: center;
+        color: #8080ab;
+    }
+
+    body {
+        background: rgba(44, 3, 171, 0.12);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container {
+        max-width: 90%;
+    }
+
+    section {
+        margin-top: 1em;
+        font-size: large;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    nav {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    nav ul {
+        display: table;
+        padding: 0;
+    }
+
+    nav ul li {
+        display: table-cell;
+    }
+
+    #login {
+        color: #8080ab;
+        text-align: left;
+        font-size: larger;
+    }
+
+    #pLogin {
+        margin-left: 2em;
+    }
+
+    #logout {
+        text-align: right;
+    }
+
+    #aLogout {
+        margin-right: 2em;
+    }
+
+    #currentLogin {
+        font-style: italic;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    .table-bordered {
+        border: 3px solid #fff;
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+
+    th.contained {
+        background-color: #8080ab;
+    }
+
+    td.data {
+        background-color: #a09dab;
+    }
+
+    table.table-bordered tr td.data, th.contained {
+        vertical-align: middle;
+        text-align: center;
+        border: 2px solid #fff;
+    }
+
+    #buttons {
+        margin-top: 0.8em;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #createButton {
+        margin-left: 2em;
+    }
+
+    #updateButton {
+        margin-right: 2em;
+    }
+
+    input.btn {
+        background-color: #fff;
+        color: #8080ab;
+        border-color: #8080ab;
+    }
+
+    input.btn:hover {
+        background-color: #8080ab;
+    }
+
+    a {
+        color: #8080ab;
+        text-decoration: underline;
+        font-size: larger;
+        margin-right: 1.5em;
+    }
+
+    a:hover {
+        color: #000;
+        text-decoration: none;
+    }
+</style>
+<body>
+<div class="container">
+    <div class="row pt-2" id="blockOfHeader">
+        <h1 id="header">Список заявок по ДТП</h1>
+    </div>
+    <nav>
+        <ul>
+            <li id="login"><p id="pLogin">Користувач: <span id="currentLogin" th:text="${user.username}"></span></p></li>
+            <li id="logout"><a id="aLogout" href="#" th:href="@{/logout}" title='Вихід'>Вихід</a></li>
+        </ul>
+    </nav>
+    <section>
+        <table class="table table-bordered">
+            <tr>
+                <th class="contained">№</th>
+                <th class="contained">Ім'я водія</th>
+                <th class="contained">Тип події</th>
+                <th class="contained">Стаття</th>
+                <th class="contained">Опис</th>
+                <th class="contained">Адреса події</th>
+                <th class="contained">Дата події</th>
+                <th class="contained">Час події</th>
+            <tr>
+            <tr th:each="accident : ${accidents}">
+                <td class="data" th:text="${accident.value.id}"></td>
+                <td class="data" th:text="${accident.value.name}"></td>
+                <td class="data" th:text="${accident.value.accidentType.name}"></td>
+                <td width="200" class="data">
+                    <p class="data" th:text="${accident.value.accidentRule.name}"></p>
+                </td>
+                <td class="data" th:text="${accident.value.text}"></td>
+                <td class="data" th:text="${accident.value.address}"></td>
+                <td class="data" th:text="${accident.value.dateAccident}"></td>
+                <td class="data" th:text="${accident.value.timeAccident}"></td>
+
+        </tr>
+        </table>
+    </section>
+    <div id="buttons">
+        <form action="#" th:action="@{/create}" method="POST">
+            <input id="createButton" type="submit" name="create" class="btn btn-outline-dark" value="Створити заяву"/>
+        </form>
+        <form action="#" th:action="@{/checkId}" method="POST">
+            <input id="updateButton" type="submit" name="update" class="btn btn-outline-dark" value="Редагувати заяву"/>
+        </form>
+        <form action="#" th:action="@{/checkIdgenerate}" method="POST">
+            <input id="reportButton" type="submit" name="report" class="btn btn-outline-dark" value="Створити звіт"/>
+        </form>
+    </div>
+</div>
+</body>
+</html>
